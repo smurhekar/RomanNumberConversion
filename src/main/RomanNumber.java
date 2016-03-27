@@ -22,18 +22,39 @@ public class RomanNumber {
         char[] chars = number.toCharArray();
         int index = 0;
         while(index <= chars.length - 1){
-            int nextIndex = index + 1;
-            if(nextIndex == chars.length){
-                convertedNum = convertedNum + valuesForSymbol.get(String.valueOf(chars[index]));
-                return convertedNum;
+            Integer currentNumber = getNumberFor(index);
+            Integer previousNumber = getNumberFor(index - 1);
+            if(0 < previousNumber && previousNumber < currentNumber){
+                convertedNum = convertedNum - previousNumber;
+                currentNumber = currentNumber - previousNumber;
             }
-            if(valuesForSymbol.get(String.valueOf(chars[index])) >= valuesForSymbol.get(String.valueOf(chars[(nextIndex)]))){
-                convertedNum = convertedNum + valuesForSymbol.get(String.valueOf(chars[index])) + valuesForSymbol.get(String.valueOf(chars[(nextIndex)]));
-            }else {
-                convertedNum = convertedNum + valuesForSymbol.get(String.valueOf(chars[index])) - valuesForSymbol.get(String.valueOf(chars[(nextIndex)]));
+            if(index == chars.length - 1){
+                return addTo(convertedNum, currentNumber);
             }
-            index = nextIndex + 1;
+            Integer nextNumber = getNumberFor(index + 1);
+            convertedNum = calculateNumberBy(convertedNum, currentNumber, nextNumber);
+            index = index + 2;
         }
         return Math.abs(convertedNum);
+    }
+
+    private Integer getNumberFor(int index) {
+        if(index < 0)
+            return 0;
+        char[] chars = number.toCharArray();
+        return valuesForSymbol.get(String.valueOf(chars[index]));
+    }
+
+    private int calculateNumberBy(int convertedNum, Integer current, Integer next) {
+        if(current >= next){
+            convertedNum = addTo(convertedNum, current + next);
+        }else {
+            convertedNum = addTo(convertedNum, current - next);
+        }
+        return convertedNum;
+    }
+
+    private int addTo(int convertedNum, Integer number) {
+        return convertedNum + number;
     }
 }

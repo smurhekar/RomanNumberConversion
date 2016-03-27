@@ -1,6 +1,7 @@
 package test;
 
 import main.RomanNumber;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Lenovo on 3/14/2016.
  */
-public class RomanNumeralConversion {
+public class RomanNumeralConversionTest {
 
     private final static Map<String, Integer> valuesForSymbol = new HashMap(){
         {
@@ -47,7 +48,22 @@ public class RomanNumeralConversion {
     }
 
     @Test
-    public void shouldBeAbleToConvertToArabicNumberForMoreThan2Characters(){
+    public void shouldBeAbleToConvertToArabicNumberForMoreThan2SimilarCharacters(){
         assertEquals(3, new RomanNumber("III", valuesForSymbol).toArabicNumber());
+    }
+
+    @Test
+    public void shouldBeAbleToConvertToArabicNumberForMoreThan2DifferentCharacters(){
+        assertEquals(8, new RomanNumber("VIII", valuesForSymbol).toArabicNumber());
+    }
+
+    @Test
+    public void shouldBeAbleToConvertToArabicNumberWhenNumberFormedBy2Characters(){
+        assertEquals(14, new RomanNumber("XIV", valuesForSymbol).toArabicNumber());
+    }
+
+    @Test
+    public void shouldBeAbleToConvertToArabicNumberWhenNumberFormedBy2CharactersMultipleTimes(){
+        assertEquals(49, new RomanNumber("XLIX", valuesForSymbol).toArabicNumber());
     }
 }
