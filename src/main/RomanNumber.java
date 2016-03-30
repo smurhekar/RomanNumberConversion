@@ -28,7 +28,7 @@ public class RomanNumber {
                 convertedNum = convertedNum - previousNumber;
                 currentNumber = currentNumber - previousNumber;
             }
-            if(index == chars.length - 1){
+            if(isLastCharacter(chars, index)){
                 return addTo(convertedNum, currentNumber);
             }
             Integer nextNumber = getNumberFor(index + 1);
@@ -36,6 +36,10 @@ public class RomanNumber {
             index = index + 2;
         }
         return Math.abs(convertedNum);
+    }
+
+    private boolean isLastCharacter(char[] chars, int index) {
+        return index == chars.length - 1;
     }
 
     private Integer getNumberFor(int index) {
